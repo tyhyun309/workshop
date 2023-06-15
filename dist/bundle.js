@@ -31,25 +31,32 @@ var giphy = __webpack_require__(/*! giphy-api */ "./node_modules/giphy-api/index
   apiKey: 'KsltJNEs1v3QDDVlinP6EFo2GqjFxgRR',
   https: true
 });
+var defaultGifs = ["WuGSL4LFUMQU", "HuVCpmfKheI2Q", "u6uAu3yyDNqRq"];
 var App = function App() {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("WuGSL4LFUMQU"),
+  // const [gifSelected, setGifSelected] = useState("WuGSL4LFUMQU");
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(defaultGifs[0]),
     _useState2 = _slicedToArray(_useState, 2),
     gifSelected = _useState2[0],
     setGifSelected = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(["WuGSL4LFUMQU", "HuVCpmfKheI2Q", "u6uAu3yyDNqRq"]),
+  // const [idList, setidList] = useState(["WuGSL4LFUMQU", "HuVCpmfKheI2Q", "u6uAu3yyDNqRq"]);
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(defaultGifs),
     _useState4 = _slicedToArray(_useState3, 2),
     idList = _useState4[0],
     setidList = _useState4[1];
   var fetchGiphy = function fetchGiphy(keyword) {
-    giphy.search({
-      q: keyword,
-      rating: 'g',
-      limit: 10
-    }, function (err, res) {
-      setidList(res.data.map(function (gif) {
-        return gif.id;
-      }));
-    });
+    if (keyword.trim() === '') {
+      setidList(defaultGifs);
+    } else {
+      giphy.search({
+        q: keyword,
+        rating: 'g',
+        limit: 10
+      }, function (err, res) {
+        setidList(res.data.map(function (gif) {
+          return gif.id;
+        }));
+      });
+    }
   };
   var changeSelectGif = function changeSelectGif(newSelectedGifId) {
     setGifSelected(newSelectedGifId);
@@ -94,12 +101,12 @@ var Gif = function Gif(props) {
   var handleClick = function handleClick() {
     changeSelectGif(id);
   };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: url,
     alt: "gif",
     className: "gif",
     onClick: handleClick
-  });
+  }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Gif);
 
@@ -153,13 +160,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
 var Searchbar = function Searchbar(props) {
+  var fetchGiphy = props.fetchGiphy;
   var handleChange = function handleChange(event) {
-    var fetchGiphy = props.fetchGiphy;
     fetchGiphy(event.currentTarget.value);
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
     className: "form-search form-control",
+    placeholder: "Type something...",
     onChange: handleChange
   }));
 };
@@ -188,7 +196,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "body {\n  font-family: Helvetica; }\n\n#root > div {\n  display: flex;\n  height: 100vh; }\n\n.header-centered {\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -100%);\n  margin: 0; }\n\n.left-scene {\n  flex: 0 0 60%;\n  position: sticky;\n  display: flex;\n  flex-direction: column; }\n  .left-scene .form-search {\n    padding: 60px 60px 60px 120px;\n    border: none;\n    font-size: 2.6em;\n    box-shadow: none; }\n    .left-scene .form-search:focus {\n      box-shadow: none; }\n  .left-scene:before {\n    content: '\\F002';\n    position: absolute;\n    top: 35px;\n    left: 60px;\n    font-family: FontAwesome;\n    font-size: 2.6em;\n    opacity: 0.4; }\n  .left-scene .selected-gif {\n    text-align: center;\n    display: flex;\n    flex-grow: 1;\n    height: calc(100vh - 232px);\n    background-image: url(\"data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.22'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E\"); }\n    .left-scene .selected-gif .gif {\n      max-width: 80%;\n      max-height: 80%;\n      margin: auto; }\n\n.right-scene {\n  flex: 0 0 40%;\n  background-color: #ecf0f1;\n  overflow: scroll; }\n  .right-scene .gif-list {\n    column-count: 2;\n    column-gap: 5px;\n    padding: 5px; }\n    .right-scene .gif-list .gif {\n      width: 100%;\n      margin: 5px;\n      cursor: pointer; }\n\n.clicked {\n  color: red; }\n", "",{"version":3,"sources":["webpack://./assets/stylesheets/application.scss"],"names":[],"mappings":"AAEA;EACE,sBAAsB,EAAA;;AAGxB;EACE,aAAa;EACb,aAAa,EAAA;;AAGf;EACE,eAAe;EACf,QAAQ;EACR,SAAS;EACT,iCAAiC;EACjC,SAAS,EAAA;;AAGX;EACE,aAAa;EACb,gBAAgB;EAChB,aAAa;EACb,sBAAsB,EAAA;EAJxB;IAOI,6BAA6B;IAC7B,YAAY;IACZ,gBAAgB;IAChB,gBAAgB,EAAA;IAVpB;MAYM,gBAAgB,EAAA;EAZtB;IAiBI,gBAAgB;IAChB,kBAAkB;IAClB,SAAS;IACT,UAAU;IACV,wBAAwB;IACxB,gBAAgB;IAChB,YAAY,EAAA;EAvBhB;IA2BI,kBAAkB;IAClB,aAAa;IACb,YAAY;IACZ,2BAA2B;IAC3B,wgBAAwgB,EAAA;IA/B5gB;MAkCM,cAAc;MACd,eAAe;MACf,YAAY,EAAA;;AAKlB;EACE,aAAa;EACb,yBAAyB;EACzB,gBAAgB,EAAA;EAHlB;IAMI,eAAe;IACf,eAAe;IACf,YAAY,EAAA;IARhB;MAWM,WAAW;MACX,WAAW;MACX,eAAe,EAAA;;AAKrB;EACE,UAAU,EAAA","sourcesContent":["@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');\n\nbody {\n  font-family: Helvetica;\n}\n\n#root > div {\n  display: flex;\n  height: 100vh;\n}\n\n.header-centered {\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -100%);\n  margin: 0;\n}\n\n.left-scene {\n  flex: 0 0 60%;\n  position: sticky;\n  display: flex;\n  flex-direction: column;\n\n  .form-search {\n    padding: 60px 60px 60px 120px;\n    border: none;\n    font-size: 2.6em;\n    box-shadow: none;\n    &:focus {\n      box-shadow: none;\n    }\n  }\n\n  &:before {\n    content: '\\F002';\n    position: absolute;\n    top: 35px;\n    left: 60px;\n    font-family: FontAwesome;\n    font-size: 2.6em;\n    opacity: 0.4;\n  }\n\n  .selected-gif {\n    text-align: center;\n    display: flex;\n    flex-grow: 1;\n    height: calc(100vh - 232px);\n    background-image: url(\"data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.22'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E\");\n\n    .gif {\n      max-width: 80%;\n      max-height: 80%;\n      margin: auto;\n    }\n  }\n}\n\n.right-scene {\n  flex: 0 0 40%;\n  background-color: #ecf0f1;\n  overflow: scroll;\n\n  .gif-list {\n    column-count: 2;\n    column-gap: 5px;\n    padding: 5px;\n\n    .gif {\n      width: 100%;\n      margin: 5px;\n      cursor: pointer;\n    }\n  }\n}\n\n.clicked {\n  color: red;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "body {\n  font-family: Helvetica; }\n\n#root > div {\n  display: flex;\n  height: 100vh; }\n\n.header-centered {\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -100%);\n  margin: 0; }\n\n.left-scene {\n  flex: 0 0 60%;\n  position: sticky;\n  display: flex;\n  flex-direction: column; }\n  .left-scene .form-search {\n    padding: 60px 60px 60px 120px;\n    border: none;\n    font-size: 2.6em;\n    box-shadow: none; }\n    .left-scene .form-search:focus {\n      box-shadow: none; }\n  .left-scene:before {\n    content: '\\F002';\n    position: absolute;\n    top: 35px;\n    left: 60px;\n    font-family: FontAwesome;\n    font-size: 2.6em;\n    opacity: 0.4; }\n  .left-scene .selected-gif {\n    text-align: center;\n    flex-grow: 1;\n    height: calc(100vh - 232px);\n    padding: 30px;\n    background: repeating-linear-gradient(-45deg, #ccc, #ccc 2px, #d5d5d5 5px, #d5d5d5 8px); }\n    .left-scene .selected-gif .gif {\n      max-width: 80%;\n      max-height: 80%;\n      margin: auto;\n      border: 1px solid black; }\n\n.right-scene {\n  flex: 0 0 40%;\n  background-color: #ecf0f1;\n  overflow: scroll; }\n  .right-scene .gif-list {\n    column-count: 2;\n    column-gap: 5px;\n    padding: 5px; }\n    .right-scene .gif-list .gif {\n      width: 100%;\n      margin: 5px;\n      cursor: pointer; }\n\n.clicked {\n  color: red; }\n", "",{"version":3,"sources":["webpack://./assets/stylesheets/application.scss"],"names":[],"mappings":"AAEA;EACE,sBAAsB,EAAA;;AAGxB;EACE,aAAa;EACb,aAAa,EAAA;;AAGf;EACE,eAAe;EACf,QAAQ;EACR,SAAS;EACT,iCAAiC;EACjC,SAAS,EAAA;;AAGX;EACE,aAAa;EACb,gBAAgB;EAChB,aAAa;EACb,sBAAsB,EAAA;EAJxB;IAOI,6BAA6B;IAC7B,YAAY;IACZ,gBAAgB;IAChB,gBAAgB,EAAA;IAVpB;MAYM,gBAAgB,EAAA;EAZtB;IAiBI,gBAAgB;IAChB,kBAAkB;IAClB,SAAS;IACT,UAAU;IACV,wBAAwB;IACxB,gBAAgB;IAChB,YAAY,EAAA;EAvBhB;IA2BI,kBAAkB;IAElB,YAAY;IACZ,2BAA2B;IAE3B,aAAa;IACb,uFAAwF,EAAA;IAjC5F;MAoCM,cAAc;MACd,eAAe;MACf,YAAY;MACZ,uBAAwB,EAAA;;AAK9B;EACE,aAAa;EACb,yBAAyB;EACzB,gBAAgB,EAAA;EAHlB;IAMI,eAAe;IACf,eAAe;IACf,YAAY,EAAA;IARhB;MAWM,WAAW;MACX,WAAW;MACX,eAAe,EAAA;;AAKrB;EACE,UAAU,EAAA","sourcesContent":["@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');\n\nbody {\n  font-family: Helvetica;\n}\n\n#root > div {\n  display: flex;\n  height: 100vh;\n}\n\n.header-centered {\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -100%);\n  margin: 0;\n}\n\n.left-scene {\n  flex: 0 0 60%;\n  position: sticky;\n  display: flex;\n  flex-direction: column;\n\n  .form-search {\n    padding: 60px 60px 60px 120px;\n    border: none;\n    font-size: 2.6em;\n    box-shadow: none;\n    &:focus {\n      box-shadow: none;\n    }\n  }\n\n  &:before {\n    content: '\\F002';\n    position: absolute;\n    top: 35px;\n    left: 60px;\n    font-family: FontAwesome;\n    font-size: 2.6em;\n    opacity: 0.4;\n  }\n\n  .selected-gif {\n    text-align: center;\n    // display: flex;\n    flex-grow: 1;\n    height: calc(100vh - 232px);\n    //background-color: #d2d2d2;\n    padding: 30px;\n    background: repeating-linear-gradient( -45deg, #ccc, #ccc 2px, #d5d5d5 5px, #d5d5d5 8px);\n\n    .gif {\n      max-width: 80%;\n      max-height: 80%;\n      margin: auto;\n      border: 1px solid black ;\n    }\n  }\n}\n\n.right-scene {\n  flex: 0 0 40%;\n  background-color: #ecf0f1;\n  overflow: scroll;\n\n  .gif-list {\n    column-count: 2;\n    column-gap: 5px;\n    padding: 5px;\n\n    .gif {\n      width: 100%;\n      margin: 5px;\n      cursor: pointer;\n    }\n  }\n}\n\n.clicked {\n  color: red;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
